@@ -37,13 +37,15 @@ export default function Login({ onLoginSuccess }) {
         sessionStorage.setItem("token", "profe");
       } else {
         sessionStorage.setItem("token", "estudiante");
+        sessionStorage.setItem("lista", data.numero_lista);
+        sessionStorage.setItem("grupo", data.grupo);
       }
 
-      console.log("El tipo de usuario es ", sessionStorage.getItem("token"));
-      sessionStorage.setItem("user", user);
-      sessionStorage.setItem("group", group);
+      if (sessionStorage.getItem("token") != "estudiante") {
+        sessionStorage.setItem("nombre", data.nombre);
+        sessionStorage.setItem("director", data.director);
+      }
 
-      // Call the prop function to update parent state
       onLoginSuccess();
 
       navigate("/");

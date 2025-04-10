@@ -4,6 +4,7 @@ import OverviewPage from "./pages/OverviewPage";
 import Sidebar from "./components/Sidebar";
 import FindStudentPage from "./pages/FindStudentPage";
 import Login from "./pages/Login";
+import StudentView from "./pages/StudentView";
 
 function ProtectedRoute({ children }) {
     const token = sessionStorage.getItem("token");
@@ -17,7 +18,13 @@ function ProtectedRoute({ children }) {
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
-    
+
+    const validateToken = () => {
+        const token = sessionStorage.getItem("token");
+        if (!token) {
+            return false;
+        }
+    };
     useEffect(() => {
         const token = sessionStorage.getItem("token");
         setIsAuthenticated(!!token);
@@ -39,14 +46,43 @@ function App() {
                 {isAuthenticated && <Sidebar />}
 
                 <Routes>
-                    <Route path="/login" element={<Login onLoginSuccess={handleLoginSuccess} />} />
-                    <Route 
-                        path="/" 
-                        element={isAuthenticated ? <OverviewPage /> : <Navigate to="/login" />} 
+                    <Route
+                        path="/login"
+                        element={<Login onLoginSuccess={handleLoginSuccess} />}
                     />
-                    <Route 
-                        path="/users" 
-                        element={isAuthenticated ? <FindStudentPage /> : <Navigate to="/login" />} 
+                    <Route
+                        path="/"
+                        element={
+                            isAuthenticated ? (
+                                <OverviewPage />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/users"
+                        element={
+                            isAuthenticated ? (
+                                <FindStudentPage />
+                            ) : (
+                                <Navigate to="/login" />
+                            )
+                        }
+                    />
+                    <Route
+                        path="/user"
+                        element={
+                            isAuthenticated ? (
+                                <StudentView
+                                    studenData={sessionStorage.getItem(
+                                        "numero_lista"
+                                    )}
+                                />
+                            ) : (
+                                <Navigate to="/user" />
+                            )
+                        }
                     />
                 </Routes>
             </div>
@@ -55,3 +91,4 @@ function App() {
 }
 
 export default App;
+

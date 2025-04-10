@@ -32,6 +32,12 @@ const SIDEBAR_ITEMS = [
         href: "/analytics",
     },
     {
+        name: "Usuario",
+        icon: DollarSign,
+        color: "#9CA3AF",
+        href: "/user",
+    },
+    {
         name: "Settings",
         icon: Settings,
         color: "#9CA3AF",

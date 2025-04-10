@@ -30,7 +30,6 @@ const options = {
       position: "top",
     },
     title: {
-
       text: "Monthly Data Trends",
     },
   },
@@ -42,6 +41,7 @@ const options = {
     },
   },
 };
+const date = new Date();
 
 const StudentLineChart = ({ url, titulo }) => {
   const [chartData, setChartData] = useState([]);
@@ -54,7 +54,6 @@ const StudentLineChart = ({ url, titulo }) => {
     "June",
     "July",
   ]);
-  const date = new Date();
 
   useEffect(() => {
     const fetchData = async () => {
