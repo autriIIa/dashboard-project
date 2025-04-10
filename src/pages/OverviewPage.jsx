@@ -2,7 +2,8 @@ import Header from "../components/Header";
 import StatCard from "../components/StatCard";
 import { motion } from "framer-motion";
 import { Zap } from "lucide-react";
-
+import StudentLineChart from "../components/StudentLineChart";
+const API_URL = "https://pokeapi.co/api/v2/ability/1/";
 export default function OverviewPage() {
     return (
         <div className="flex-1 overflow-auto relative z-10">
@@ -39,6 +40,17 @@ export default function OverviewPage() {
                         color="#6366f1"
                     ></StatCard>
                 </motion.div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <StudentLineChart
+                        url={API_URL}
+                        titulo="Ability Usage"
+                    ></StudentLineChart>
+                    <StudentLineChart
+                        url={API_URL}
+                        titulo="Ability Usage"
+                    ></StudentLineChart>
+                </div>
             </main>
         </div>
     );
