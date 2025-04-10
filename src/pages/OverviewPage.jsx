@@ -5,7 +5,7 @@ import { Zap } from "lucide-react";
 import TopUsers from "../components/TopUsers";
 import LineChart from "../components/LineChart";
 import { useState, useEffect } from "react";
-
+import PieChartStudent from "../components/PieChartStudent";
 const API_URL = "https://pokeapi.co/api/v2/ability/1/";
 export default function OverviewPage() {
     const [chartData, setChartData] = useState([]);
@@ -34,6 +34,12 @@ export default function OverviewPage() {
                     fetch(
                         "https://a00573055.pythonanywhere.com/db/completado/"
                     ),
+                    fetch(
+                        "https://a00573055.pythonanywhere.com/db/aprobados/",
+                        {
+                            method: "GET",
+                        }
+                    ),
                 ];
 
                 const responses = await Promise.all(fetches);
@@ -46,12 +52,12 @@ export default function OverviewPage() {
                     }
                 });
 
-                const [mean_data, top_data, aaaa, completado] =
+                const [mean_data, top_data, aaaa, completado, aprobados] =
                     await Promise.all(responses.map((res) => res.json()));
 
                 // Puedes usar mean_data, top_data, etc. como quieras
                 const numPokemon = mean_data.pokemon?.length || 0;
-
+                console.log(aprobados);
                 const monthlyCounts = Array.from({ length: 7 }, () =>
                     Math.floor(Math.random() * (numPokemon || 10))
                 );
@@ -62,6 +68,10 @@ export default function OverviewPage() {
                 );
                 const top_id = top_data.mejores.map((item) => item.id);
 
+                // datos individuales
+                setAverageCompletedLevels(
+                    completado.promedio_juegos_completados
+                );
                 setChartData([
                     {
                         label: "Ability Usage",
@@ -139,9 +149,9 @@ export default function OverviewPage() {
                     transition={{ duration: 0.5 }}
                 >
                     <StatCard
-                        name="Total Sales"
+                        name="Promedio juegos completados"
                         icon={Zap}
-                        value="12,200"
+                        value={averageCompletedLevels}
                         color="#6366f1"
                     ></StatCard>
                     <StatCard
@@ -173,6 +183,7 @@ export default function OverviewPage() {
                         titulo={"Top Usuarios"}
                         chartDataFormatted={topDataFormatted}
                     />
+                    <PieChartStudent></PieChartStudent>
                 </motion.div>
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     <LineChart
