@@ -8,12 +8,16 @@ export default function FindStudentPage() {
 
   // Sample student data - replace with your actual data source
   const studentData = [
-    { id: 1, name: "John Doe", age: 20, class: "10A" },
-    { id: 2, name: "Jane Smith", age: 19, class: "10B" },
-    { id: 3, name: "Robert Johnson", age: 21, class: "11A" },
-    { id: 4, name: "Emily Williams", age: 20, class: "11B" },
-    { id: 5, name: "Michael Brown", age: 19, class: "10A" },
-    { id: 6, name: "Sarah Davis", age: 21, class: "12A" },
+    { id: 1, genero: "M", grupo: "A", id_docente: 2, monedas: 20, numero_lista: "1" },
+    { id: 2, genero: "F", grupo: "B", id_docente: 3, monedas: 100, numero_lista: "1" },
+    { id: 3, genero: "M", grupo: "A", id_docente: 2, monedas: 10, numero_lista: "2" },
+    { id: 4, genero: "F", grupo: "B", id_docente: 3, monedas: 30, numero_lista: "2" },
+    { id: 5, genero: "M", grupo: "A", id_docente: 2, monedas: 15, numero_lista: "3" },
+    { id: 6, genero: "F", grupo: "B", id_docente: 3, monedas: 20, numero_lista: "3" },
+    { id: 7, genero: "M", grupo: "A", id_docente: 2, monedas: 40, numero_lista: "4" },
+    { id: 8, genero: "F", grupo: "B", id_docente: 3, monedas: 5, numero_lista: "4" },
+    { id: 9, genero: "M", grupo: "A", id_docente: 2, monedas: 2, numero_lista: "5" },
+    { id: 10, genero: "F", grupo: "B", id_docente: 3, monedas: 26, numero_lista: "5" }
   ];
 
   // Filter students based on search input
@@ -21,10 +25,10 @@ export default function FindStudentPage() {
     if (searchInput === "") return true;
 
     return (
-      student.name.toLowerCase().includes(searchInput.toLowerCase()) ||
-      student.class.toLowerCase().includes(searchInput.toLowerCase()) ||
-      student.id.toString().includes(searchInput) ||
-      student.age.toString().includes(searchInput)
+      student.genero.toLowerCase().includes(searchInput.toLowerCase()) ||
+      student.grupo.toLowerCase().includes(searchInput.toLowerCase()) ||
+      student.numero_lista.includes(searchInput) ||
+      student.id.toString().includes(searchInput)
     );
   });
 
@@ -105,9 +109,10 @@ export default function FindStudentPage() {
                 <thead className="bg-gray-900 bg-opacity-60">
                   <tr className="text-left">
                     <th className="p-4 font-medium">ID</th>
-                    <th className="p-4 font-medium">Name</th>
-                    <th className="p-4 font-medium">Age</th>
-                    <th className="p-4 font-medium">Class</th>
+                    <th className="p-4 font-medium">Gender</th>
+                    <th className="p-4 font-medium">Group</th>
+                    <th className="p-4 font-medium">List Number</th>
+                    <th className="p-4 font-medium">Coins</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -117,11 +122,10 @@ export default function FindStudentPage() {
                       className="border-t border-gray-700 hover:bg-gray-700 hover:bg-opacity-30 transition-colors cursor-pointer"
                     >
                       <td className="p-4">{student.id}</td>
-                      <td className="p-4 font-medium text-indigo-300">
-                        {student.name}
-                      </td>
-                      <td className="p-4">{student.age}</td>
-                      <td className="p-4">{student.class}</td>
+                      <td className="p-4">{student.genero}</td>
+                      <td className="p-4">{student.grupo}</td>
+                      <td className="p-4">{student.numero_lista}</td>
+                      <td className="p-4">{student.monedas}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -140,16 +144,16 @@ export default function FindStudentPage() {
                   <div className="flex justify-between items-center">
                     <div>
                       <h3 className="text-lg font-medium text-indigo-300">
-                        {student.name}
+                        {student.genero === "M" ? "Mr." : "Ms."} {student.numero_lista}
                       </h3>
-                      <p className="text-gray-400">Class: {student.class}</p>
+                      <p className="text-gray-400">Group: {student.grupo}</p>
                     </div>
                     <div className="text-right">
                       <div className="text-sm text-gray-400">
                         ID: {student.id}
                       </div>
                       <div className="text-sm text-gray-400">
-                        Age: {student.age}
+                        Coins: {student.monedas}
                       </div>
                     </div>
                   </div>

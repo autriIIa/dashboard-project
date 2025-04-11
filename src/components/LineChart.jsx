@@ -65,6 +65,7 @@ const LineChart = ({ chartDataFormatted, titulo }) => {
       <Line options={options} data={chartDataFormatted} />
     </motion.div>
   );
+
 };
 
 export default LineChart;

@@ -1,7 +1,7 @@
 import Header from "../components/Header";
 import StatCard from "../components/StatCard";
 import { motion } from "framer-motion";
-import { Zap } from "lucide-react";
+import { Zap, Check, Trophy, Frown } from "lucide-react";
 import TopUsers from "../components/TopUsers";
 import LineChart from "../components/LineChart";
 import { useState, useEffect } from "react";
@@ -21,21 +21,28 @@ export default function OverviewPage() {
 
     const [topData, setTopData] = useState([]);
     const [idTopData, setIdTopData] = useState([]);
+    const [minData, setMinData] = useState([]);
+    const [idMinData, setIdMinData] = useState([]);
+
+    const [aprobadosData, setAprobadosData] = useState();
 
     // datos individuales
     const [averageCompletedLevels, setAverageCompletedLevels] = useState("");
+
+    const [topUser, setTopUser] = useState("");
+    const [minUser, setMinUser] = useState("");
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const fetches = [
                     fetch(API_URL),
                     fetch("https://a00573055.pythonanywhere.com/db/top/"),
-                    fetch(API_URL),
+                    fetch("https://a00573055.pythonanywhere.com//db/max/"),
                     fetch(
                         "https://a00573055.pythonanywhere.com/db/completado/"
                     ),
                     fetch(
-                        "https://a00573055.pythonanywhere.com/db/aprobados/",
+                        "https://a00573055.pythonanywhere.com/db/aprobados/", // pastel
                         {
                             method: "GET",
                         }
@@ -56,8 +63,9 @@ export default function OverviewPage() {
                     await Promise.all(responses.map((res) => res.json()));
 
                 // Puedes usar mean_data, top_data, etc. como quieras
+
                 const numPokemon = mean_data.pokemon?.length || 0;
-                console.log(aprobados);
+
                 const monthlyCounts = Array.from({ length: 7 }, () =>
                     Math.floor(Math.random() * (numPokemon || 10))
                 );
@@ -66,8 +74,17 @@ export default function OverviewPage() {
                 const top_monedas = top_data.mejores.map(
                     (item) => item.monedas
                 );
+                const min_monedas = top_data.peores.map((item) => item.monedas);
                 const top_id = top_data.mejores.map((item) => item.id);
+                const min_id = top_data.peores.map((item) => item.id);
 
+                console.log("mesirvce", top_data.mejores, top_data.peores);
+                const topUser = top_data.mejores.at(0).monedas;
+                const minUser = top_data.peores.at(0).monedas;
+                setTopUser(topUser);
+                setMinUser(minUser);
+
+                console.log("data para stat", typeof topUser, typeof minUser);
                 // datos individuales
                 setAverageCompletedLevels(
                     completado.promedio_juegos_completados
@@ -91,13 +108,23 @@ export default function OverviewPage() {
 
                 setTopData([
                     {
-                        label: "Ability Usage",
+                        label: "Monedas",
                         data: top_monedas,
                         borderColor: "rgb(255, 99, 132)",
                         backgroundColor: "rgba(255, 99, 132, 0.5)",
                     },
                 ]);
                 setIdTopData(top_id);
+                setMinData([
+                    {
+                        label: "Monedas",
+                        data: min_monedas,
+                        borderColor: "rgb(255, 99, 132)",
+                        backgroundColor: "rgba(255, 99, 132, 0.5)",
+                    },
+                ]);
+                setIdMinData(min_id);
+                setAprobadosData(aprobados);
             } catch (error) {
                 console.error("Error fetching data:", error);
                 setChartData([
@@ -123,7 +150,7 @@ export default function OverviewPage() {
 
         const intervalId = setInterval(() => {
             fetchData();
-        }, 1000);
+        }, 9000);
 
         return () => clearInterval(intervalId);
     }, []);
@@ -138,39 +165,39 @@ export default function OverviewPage() {
         datasets: topData,
     };
 
+    const minDataFormatted = {
+        labels: idMinData,
+        datasets: minData,
+    };
+
     return (
         <div className="flex-1 overflow-auto relative z-10">
             <Header title="Overview" />
             <main className="max-w-7xl mx-auto py-6 px-4 lg:px-8">
                 <motion.div
-                    className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mb-8"
+                    className="grid grid-cols-1 gap-5 sm:grid-cols-1 lg:grid-cols-3 mb-8"
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                 >
                     <StatCard
                         name="Promedio juegos completados"
-                        icon={Zap}
+                        icon={Check}
                         value={averageCompletedLevels}
-                        color="#6366f1"
+                        color="#FF6384
+"
                     ></StatCard>
                     <StatCard
-                        name="Total Sales"
-                        icon={Zap}
-                        value="12,200"
-                        color="#6366f1"
+                        name="Puntaje máximo"
+                        icon={Trophy}
+                        value={topUser}
+                        color="#FF6384"
                     ></StatCard>
                     <StatCard
-                        name="Total Sales"
-                        icon={Zap}
-                        value="12,200"
-                        color="#6366f1"
-                    ></StatCard>
-                    <StatCard
-                        name="Total Sales"
-                        icon={Zap}
-                        value="12,200"
-                        color="#6366f1"
+                        name="Puntaje mínimo"
+                        icon={Frown}
+                        value={minUser}
+                        color="#FF6384"
                     ></StatCard>
                 </motion.div>
                 <motion.div
@@ -183,14 +210,22 @@ export default function OverviewPage() {
                         titulo={"Top Usuarios"}
                         chartDataFormatted={topDataFormatted}
                     />
-                    <PieChartStudent></PieChartStudent>
+                    <TopUsers
+                        titulo={"Peores resultados"}
+                        chartDataFormatted={minDataFormatted}
+                    />
+
+
+                    
                 </motion.div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <LineChart
-                        titulo="Grafico de ventas"
-                        chartDataFormatted={chartDataFormatted}
-                    ></LineChart>
-                </div>
+                <motion.div
+
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
+                >
+                    <PieChartStudent data={aprobadosData} />
+                </motion.div>
             </main>
         </div>
     );
