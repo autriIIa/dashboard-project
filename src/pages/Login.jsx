@@ -11,7 +11,7 @@ export default function Login({ onLoginSuccess }) {
 
   async function handleLogin(event) {
     event.preventDefault();
-    console.log(JSON.stringify({ numero_lista: user, grupo: group }));
+
     try {
       const response = await fetch(LOGIN_URL, {
         method: "POST",
@@ -22,14 +22,12 @@ export default function Login({ onLoginSuccess }) {
       });
 
       const text = await response.text(); // usa text() primero para ver el cuerpo
-      console.log("Raw response:", text);
 
       if (!response.ok) {
         throw new Error("Backend error");
       }
 
       const data = JSON.parse(text);
-      console.log("Data.response: ", data.response);
 
       if (data.nombre === "admin") {
         sessionStorage.setItem("token", "admin");
@@ -47,7 +45,6 @@ export default function Login({ onLoginSuccess }) {
       }
 
       onLoginSuccess();
-
       navigate("/");
     } catch (error) {
       console.error("Error al iniciar sesión:", error.message);
@@ -56,11 +53,7 @@ export default function Login({ onLoginSuccess }) {
 
   return (
     <div className="flex min-h-screen w-full items-center justify-center p-4">
-      <img
-        className="absolute top-1/20  z-10"
-        src="/logo.png"
-        alt=""
-      />
+      <img className="absolute top-1/20  z-10" src="/logo.png" alt="" />
       <div className="w-full max-w-md bg-gray-800 bg-opacity-50 backdrop-blur-md shadow-lg rounded-xl border border-gray-700 p-6">
         <h1 className="text-2xl font-semibold text-gray-100 mb-4">
           Bienvenido

@@ -56,8 +56,11 @@ export default function PieChartStudent({ data }) {
         boxShadow: "0px 25px 50px -12px rgba(0, 0, 0, 0.5)",
       }}
     >
+      <h2 className="mt-1 mb-2 text-3xl font-semibold text-gray-100">
+        Gráfica de aprobados
+      </h2>
       <label className="block text-sm text-gray-400 mb-2">
-        Selecciona grupo:
+        <span className="my-4">Selecciona grupo:</span>
         <select
           className="w-full mt-1 bg-gray-700 text-white border border-gray-600 rounded px-3 py-2"
           value={selectedIndex}
