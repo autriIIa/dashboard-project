@@ -89,7 +89,7 @@ const StudentView = ({ studentId }) => {
         const id_docente = playerData.id_docente;
         const monedas = playerData.monedas;
 
-        if (playerData.genero === "H") {
+        if (playerData.genero === "H" || playerData.genero === "M") {
           genero = "Masculino";
         } else if (playerData.genero === "F") {
           genero = "Femenino";
