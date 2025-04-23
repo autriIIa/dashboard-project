@@ -6,13 +6,18 @@ import FindStudentPage from "./pages/FindStudentPage";
 import Login from "./pages/Login";
 import StudentView from "./pages/StudentView";
 
-function ProtectedRoute({ children }) {
+function ProtectedRoute({ children, allowedUsers = [] }) {
   const token = sessionStorage.getItem("token");
   if (!token) {
     return <Navigate to="/login" replace />;
   }
+  if (allowedUsers.length > 0 && !allowedUsers.includes(token)) {
+    return <Navigate to="/" replace />;
+  }
+
   return children;
 }
+
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -28,7 +33,7 @@ function App() {
 
   console.log(sessionStorage.getItem("token"));
   console.log(sessionStorage.getItem("lista"));
-  
+
   return (
     <div className="flex h-screen bg-gray-900 text-gray-100 overflow-hidden">
       <div className="fixed inset-0 z-0">
@@ -58,7 +63,7 @@ function App() {
         <Route
           path="/users"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedUsers={["admin"]}>
               <FindStudentPage />
             </ProtectedRoute>
           }
@@ -66,7 +71,7 @@ function App() {
         <Route
           path="/user"
           element={
-            <ProtectedRoute>
+            <ProtectedRoute allowedUsers={["estudiante"]}>
               <StudentView studentId={sessionStorage.getItem("lista")} />
             </ProtectedRoute>
           }

@@ -8,6 +8,8 @@ import { useState, useEffect } from "react";
 import PieChartStudent from "../components/PieChartStudent";
 const API_URL = "https://pokeapi.co/api/v2/ability/1/";
 export default function OverviewPage() {
+
+
   const [chartData, setChartData] = useState([]);
   const [labels, setLabels] = useState([
     "January",
