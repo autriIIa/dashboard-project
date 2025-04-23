@@ -37,7 +37,7 @@ const options = {
     y: {
       beginAtZero: true,
       min: 0,
-      max: 10,
+
     },
   },
 };
@@ -58,9 +58,7 @@ const LineChart = ({ chartDataFormatted, titulo }) => {
     >
       <h3 className="text-2xl font-semibold text-gray-300">{titulo}</h3>
 
-      <h4 className="text-sm font-semibold text-gray-500 mb-4">
-        {date.getDate()}/{date.getMonth() + 1}/{date.getFullYear()}
-      </h4>
+   
 
       <Line options={options} data={chartDataFormatted} />
     </motion.div>

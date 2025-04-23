@@ -174,7 +174,7 @@ export default function OverviewPage() {
           <StatCard
             name="Promedio juegos completados"
             icon={Check}
-            value={averageCompletedLevels}
+            value={Math.round(averageCompletedLevels)}
             color="#FF6384
 "
           ></StatCard>
