@@ -14,7 +14,7 @@ export default function PieChartStudent({ data }) {
 
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  // If no valid data, show a placeholder or error message
+
   if (!hasData) {
     return (
       <motion.div
@@ -57,10 +57,10 @@ export default function PieChartStudent({ data }) {
       }}
     >
       <h2 className="mt-1 mb-2 text-3xl font-semibold text-gray-100">
-        Gráfica de aprobados
+        Gráfica de aprobados por nivel
       </h2>
       <label className="block text-sm text-gray-400 mb-2">
-        <span className="my-4">Selecciona grupo:</span>
+        <span className="my-4">Selecciona el nivel:</span>
         <select
           className="w-full mt-1 bg-gray-700 text-white border border-gray-600 rounded px-3 py-2"
           value={selectedIndex}
@@ -68,7 +68,7 @@ export default function PieChartStudent({ data }) {
         >
           {data.aprobados.map((_, i) => (
             <option key={i} value={i}>
-              Grupo {i + 1}
+              Nivel {i + 1}
             </option>
           ))}
         </select>

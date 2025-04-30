@@ -5,6 +5,7 @@ import Sidebar from "./components/Sidebar";
 import FindStudentPage from "./pages/FindStudentPage";
 import Login from "./pages/Login";
 import StudentView from "./pages/StudentView";
+import ProfesorView from "./pages/ProfesorView.";
 
 function ProtectedRoute({ children, allowedUsers = [] }) {
   const token = sessionStorage.getItem("token");
@@ -17,7 +18,6 @@ function ProtectedRoute({ children, allowedUsers = [] }) {
 
   return children;
 }
-
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -54,12 +54,15 @@ function App() {
             <ProtectedRoute>
               {sessionStorage.getItem("token") === "estudiante" ? (
                 <StudentView studentId={sessionStorage.getItem("lista")} />
+              ) : sessionStorage.getItem("token") === "profe" ? (
+                <ProfesorView profesorId={sessionStorage.getItem("id")} />
               ) : (
                 <OverviewPage />
               )}
             </ProtectedRoute>
           }
         />
+
         <Route
           path="/users"
           element={

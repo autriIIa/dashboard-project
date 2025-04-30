@@ -28,7 +28,7 @@ export default function OverviewPage() {
 
   const [aprobadosData, setAprobadosData] = useState();
 
-  // datos individuales
+
   const [averageCompletedLevels, setAverageCompletedLevels] = useState("");
 
   const [topUser, setTopUser] = useState("");
@@ -67,7 +67,6 @@ export default function OverviewPage() {
         );
 
         const top_monedas = top_data.mejores.map((item) => item.monedas);
-
         const min_monedas = top_data.peores.map((item) => item.monedas);
         const top_id = top_data.mejores.map((item) => item.id);
         const min_id = top_data.peores.map((item) => item.id);
@@ -78,7 +77,7 @@ export default function OverviewPage() {
         setTopUser(topUser);
         setMinUser(minUser);
 
-        // datos individuales
+
         setAverageCompletedLevels(completado.promedio_juegos_completados);
         setChartData([
           {

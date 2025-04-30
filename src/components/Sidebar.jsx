@@ -32,7 +32,7 @@ const Sidebar = () => {
   const [sidebarItems, setSidebarItems] = useState([]);
 
   useEffect(() => {
-    // Set the sidebar items based on user role
+
     const userRole = sessionStorage.getItem("token");
     if (userRole === "estudiante") {
       setSidebarItems(STUDENT_SIDEBAR_ITEMS);

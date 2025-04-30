@@ -42,6 +42,7 @@ export default function Login({ onLoginSuccess }) {
       if (sessionStorage.getItem("token") != "estudiante") {
         sessionStorage.setItem("nombre", data.nombre);
         sessionStorage.setItem("director", data.director);
+        sessionStorage.setItem("id", data.id);
       }
 
       onLoginSuccess();
