@@ -100,7 +100,7 @@ export default function Login({ onLoginSuccess }) {
         <p>To login, use the following credentials:</p>
         <ul className="list-disc ml-4">
           <li>username: admin</li>
-          <li>password: 123456</li>
+          <li>password: 1234</li>
         </ul>
       </div>
     </div>
