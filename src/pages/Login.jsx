@@ -90,11 +90,18 @@ export default function Login({ onLoginSuccess }) {
 
           <button
             type="submit"
-            className="p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            className="inline-block p-2 bg-blue-600 text-white rounded hover:bg-blue-700"
           >
             Login
           </button>
         </form>
+      </div>
+      <div className="w-100 absolute bottom-6 rounded-xl border-2 border-gray-700 p-6">
+        <p>To login, use the following credentials:</p>
+        <ul className="list-disc ml-4">
+          <li>username: admin</li>
+          <li>password: 123456</li>
+        </ul>
       </div>
     </div>
   );
